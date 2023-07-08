@@ -101,7 +101,9 @@ enum BaseDirectory {
   /// As returned by getApplicationLibrary() on iOS. For other platforms
   /// this resolves to the subdirectory 'Library' created in the directory
   /// returned by getApplicationSupportDirectory()
-  applicationLibrary
+  applicationLibrary,
+
+  externalStorageDirectory,
 }
 
 /// Type of updates requested for a task or group of tasks
@@ -371,7 +373,11 @@ sealed class Task extends Request {
           when Platform.isMacOS || Platform.isIOS =>
         getLibraryDirectory(),
       BaseDirectory.applicationLibrary => Future.value(Directory(
-          path.join((await getApplicationSupportDirectory()).path, 'Library')))
+          path.join((await getApplicationSupportDirectory()).path, 'Library'))),
+      BaseDirectory.externalStorageDirectory when Platform.isAndroid =>
+        Future.value(
+            Directory(path.join((await getExternalStorageDirectory())!.path))),
+      _ => getApplicationDocumentsDirectory()
     };
     return path.join(baseDir.path, directory, filename);
   }

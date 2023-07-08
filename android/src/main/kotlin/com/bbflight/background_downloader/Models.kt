@@ -15,7 +15,8 @@ enum class BaseDirectory {
     applicationDocuments,  // getApplicationDocumentsDirectory()
     temporary,  // getTemporaryDirectory()
     applicationSupport, // getApplicationSupportDirectory()
-    applicationLibrary // getApplicationSupportDirectory() subdir "Library"
+    applicationLibrary, // getApplicationSupportDirectory() subdir "Library"
+    externalStorageDirectory // getExternalStorageDirectory
 }
 
 /// Type of updates requested for a group of tasks
@@ -140,6 +141,15 @@ class Task(
                 BaseDirectory.applicationLibrary -> Path(
                     context.filesDir.path, "Library"
                 ).pathString
+                    BaseDirectory.externalStorageDirectory -> {
+                        if (context.getExternalFilesDir(null)?.path != null) {
+                            return context.getExternalFilesDir(null)!!.path
+                        } else {
+                            return Path(
+                                context.dataDir.path, "app_flutter"
+                            ).pathString
+                        }
+                    }
             }
             val path = Path(baseDirPath, directory)
             return Path(path.pathString, filename).pathString
@@ -149,6 +159,15 @@ class Task(
                 BaseDirectory.temporary -> context.cacheDir.path
                 BaseDirectory.applicationSupport -> context.filesDir.path
                 BaseDirectory.applicationLibrary -> "${context.filesDir.path}/Library"
+                BaseDirectory.externalStorageDirectory -> {
+                    if (context.getExternalFilesDir(null)?.path != null) {
+                        return context.getExternalFilesDir(null)!!.path
+                    } else {
+                        return Path(
+                            context.dataDir.path, "app_flutter"
+                        ).pathString
+                    }
+                }
             }
             return if (directory.isEmpty()) "$baseDirPath/${filename}" else
                 "$baseDirPath/${directory}/${filename}"
