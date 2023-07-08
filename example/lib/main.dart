@@ -7,6 +7,8 @@ import 'package:background_downloader_example/sqlite_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
 
+final log = Logger('BackgroundDownloaderExample');
+
 void main() {
   Logger.root.onRecord.listen((LogRecord rec) {
     debugPrint(
@@ -219,10 +221,12 @@ class _MyAppState extends State<MyApp> {
                 : 'https://storage.googleapis.com/approachcharts/test/5MB-test.ZIP',
             filename: 'zipfile.zip',
             directory: 'my/directory',
-            baseDirectory: BaseDirectory.applicationDocuments,
+            baseDirectory: BaseDirectory.externalStorageDirectory,
             updates: Updates.statusAndProgress,
             allowPause: true,
             metaData: '<example metaData>');
+        final filePath = await backgroundDownloadTask?.filePath();
+        log.info(filePath);
         await FileDownloader().enqueue(backgroundDownloadTask!);
         break;
       case ButtonState.cancel:
