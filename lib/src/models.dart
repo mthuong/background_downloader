@@ -375,8 +375,8 @@ sealed class Task extends Request {
       BaseDirectory.applicationLibrary => Future.value(Directory(
           path.join((await getApplicationSupportDirectory()).path, 'Library'))),
       BaseDirectory.externalStorageDirectory when Platform.isAndroid =>
-        Future.value(
-            Directory(path.join((await getExternalStorageDirectory())!.path))),
+        Future.value(Directory(
+            path.join((await getExternalStorageDirectory())!.path, 'dvr'))),
       _ => getApplicationDocumentsDirectory()
     };
     return path.join(baseDir.path, directory, filename);
