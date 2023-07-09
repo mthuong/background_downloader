@@ -141,16 +141,17 @@ class Task(
                 BaseDirectory.applicationLibrary -> Path(
                     context.filesDir.path, "Library"
                 ).pathString
-                    BaseDirectory.externalStorageDirectory -> {
-                        if (context.getExternalFilesDir(null)?.path != null) {
-                            return context.getExternalFilesDir(null)!!.path
-                        } else {
-                            return Path(
-                                context.dataDir.path, "app_flutter"
-                            ).pathString
-                        }
+                BaseDirectory.externalStorageDirectory -> {
+                    if (context.getExternalFilesDir(null)?.path != null) {
+                        return context.getExternalFilesDir(null)!!.path
+                    } else {
+                        return Path(
+                            context.dataDir.path, "app_flutter"
+                        ).pathString
                     }
+                }
             }
+            Log.d("filePath", "" + baseDirectory.name + " - " + baseDirPath)
             val path = Path(baseDirPath, directory)
             return Path(path.pathString, filename).pathString
         } else {
