@@ -59,7 +59,7 @@ class TaskWorker(
         const val keyTempFilename = "tempFilename"
         const val keyStartByte = "startByte"
         const val bufferSize = 8096
-        const val taskTimeoutMillis = 9 * 60 * 1000L  // 9 minutes
+        const val taskTimeoutMillis = 30 * 60 * 1000L  // 30 minutes
 
         private val fileNameRegEx = Regex("""\{filename\}""", RegexOption.IGNORE_CASE)
         private val progressRegEx = Regex("""\{progress\}""", RegexOption.IGNORE_CASE)
