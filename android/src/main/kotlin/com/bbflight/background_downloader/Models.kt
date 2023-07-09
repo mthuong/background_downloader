@@ -144,9 +144,9 @@ class Task(
                 ).pathString
                 BaseDirectory.externalStorageDirectory -> {
                     if (context.getExternalFilesDir(null)?.path != null) {
-                        return context.getExternalFilesDir(null)!!.path
+                        "${context.getExternalFilesDir(null)!!.path}/dvr"
                     } else {
-                        return Path(
+                        Path(
                             context.dataDir.path, "app_flutter"
                         ).pathString
                     }
@@ -163,9 +163,9 @@ class Task(
                 BaseDirectory.applicationLibrary -> "${context.filesDir.path}/Library"
                 BaseDirectory.externalStorageDirectory -> {
                     if (context.getExternalFilesDir(null)?.path != null) {
-                        return context.getExternalFilesDir(null)!!.path
+                        "${context.getExternalFilesDir(null)!!.path}/dvr"
                     } else {
-                        return Path(
+                        Path(
                             context.dataDir.path, "app_flutter"
                         ).pathString
                     }
